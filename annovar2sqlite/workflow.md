@@ -46,7 +46,12 @@ f.close()
 ###Splite the header and add calculated fields
 ```python
 header = f.readline()
-ele = header.strip().split('\t')
+items = header.strip().split('\t') #splite the header and put all items in a list
+items = items[0:-1] # Trim the item "other information"
+items = items + ["AC_ref","AC_alt","GT_ref","GT_het","GT_hom","VCF_infor"] #Attach self-calculated and zipped VCF data
+items = [w.replace('.', '_') for w in items] #Replace "." in items, which is not allowed to use in table fields of SQLite
+items = [w.replace('1000g', 'g1k') for w in items] #Replace items stated with numbers
+
 ```
 ###Create a new SQLite database with the given annotation file name if not existed
 ```python
