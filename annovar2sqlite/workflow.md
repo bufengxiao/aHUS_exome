@@ -23,7 +23,7 @@ After importing all information to the database, we should be able to:
   - generate new annotation files that contains variants fiting to the query
 
 #Step by Step to achive the goal
-###Read an annotation file
+###Read and print the header of an annotation file
 ```python
 import sys
 import os
@@ -43,13 +43,24 @@ else:
 print f.readline()
 f.close()
 ```
-###Create a new SQLite database with the given annotation file name
+###Splite the header and add calculated fields
 ```python
-# filename is sys.argv[1][:-len("hg19_multianno.txt")]
-def create_database(filename):
-  
+header = f.readline()
+ele = header.strip().split('\t')
 ```
+###Create a new SQLite database with the given annotation file name if not existed
+```python
+import sqlite3
+import os.path
 
-
-
-
+# filename is sys.argv[1][:-len("hg19_multianno.txt")]
+filename = "try"
+def create_database(filename):
+  if not os.path.isfile(filename): 
+    # Connecting to the database file
+    conn = sqlite3.connect(filename)
+    conn.close()
+  else:
+    print "SQLite database already exists"
+create_database(filename)
+```
