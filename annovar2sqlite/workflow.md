@@ -23,12 +23,12 @@ After importing all information to the database, we should be able to:
   - generate new annotation files that contains variants fiting to the query
 
 #Step by Step to achive the goal
-###Read the annotation file
+###Read an annotation file
 ```python
 import sys
 import os
-
-if len(sys.argv)==2:
+# Read the annovar annotation file
+if len(sys.argv)==2 and sys.argv[1].endswith("hg19_multianno.txt"):
   try:
     f = open(sys.argv[1], 'r')
   except IOError:
@@ -36,12 +36,19 @@ if len(sys.argv)==2:
     sys.exit()
 else:
     print '''
-    Incorrect number of arguments.
+    Incorrect number of arguments or filename extension .
     Please input:
     python annovar2sqlite.py example.hg19_multianno.txt
     '''
+print f.readline()
+f.close()
 ```
-
+###Create a new SQLite database with the given annotation file name
+```python
+# filename is sys.argv[1][:-len("hg19_multianno.txt")]
+def create_database(filename):
+  
+```
 
 
 
