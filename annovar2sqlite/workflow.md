@@ -51,8 +51,20 @@ items = items[0:-1] # Trim the item "other information"
 items = items + ["AC_ref","AC_alt","GT_ref","GT_het","GT_hom","VCF_infor"] #Attach self-calculated and zipped VCF data
 items = [w.replace('.', '_') for w in items] #Replace "." in items, which is not allowed to use in table fields of SQLite
 items = [w.replace('1000g', 'g1k') for w in items] #Replace items stated with numbers
-
 ```
+###~~Identify the first fully annotated line~~
+```python
+import re 
+for line in f
+  if re.search(line, '\t\.\t'):
+    continue
+  else:
+    type = line
+    break
+print type
+  
+```
+
 ###Create a new SQLite database with the given annotation file name if not existed
 ```python
 import sqlite3
